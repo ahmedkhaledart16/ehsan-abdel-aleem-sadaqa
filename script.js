@@ -39,6 +39,33 @@ const quran = {
 مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ
 الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ
 مِنَ الْجِنَّةِ وَالنَّاسِ`
+  },
+  asr: {
+    title: 'سورة العصر',
+    text: `وَالْعَصْرِ
+إِنَّ الْإِنسَانَ لَفِي خُسْرٍ
+إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ`
+  },
+  kawthar: {
+    title: 'سورة الكوثر',
+    text: `إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ
+فَصَلِّ لِرَبِّكَ وَانْحَرْ
+إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ`
+  },
+  nasr: {
+    title: 'سورة النصر',
+    text: `إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ
+وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا
+فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا`
+  },
+  kafirun: {
+    title: 'سورة الكافرون',
+    text: `قُلْ يَا أَيُّهَا الْكَافِرُونَ
+لَا أَعْبُدُ مَا تَعْبُدُونَ
+وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ
+وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ
+وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ
+لَكُمْ دِينُكُمْ وَلِيَ دِينِ`
   }
 };
 
@@ -143,3 +170,19 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: .12 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+
+// Daily gift checklist (saved locally on each visitor's device)
+const giftChecks = document.querySelectorAll('[data-gift]');
+function renderGiftChecks(){
+  giftChecks.forEach(input => {
+    input.checked = localStorage.getItem(`gift-${input.dataset.gift}`) === '1';
+  });
+}
+giftChecks.forEach(input => {
+  input.addEventListener('change', () => {
+    localStorage.setItem(`gift-${input.dataset.gift}`, input.checked ? '1' : '0');
+    showToast(input.checked ? 'جزاك الله خيرًا، تم تسجيل العمل' : 'تم إلغاء التحديد');
+  });
+});
+renderGiftChecks();
